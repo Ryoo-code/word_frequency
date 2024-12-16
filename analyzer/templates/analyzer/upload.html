@@ -9,10 +9,11 @@
         <header>
             <h1>単語頻度解析アプリ</h1>
         </header>
-        <form action = "" method="POST">
-            <p>英語の文章をここに入力してください<br>
-            <input type="text" name="name"></p>
-            <p><input type="button" value="解析" id="button2"></p>
+        <form action = "{% url 'result' %}" method="POST">
+            {% csrf_token %}
+            <p>英語の文章をここに入力してください<br>              
+                <input type="text" name="name"></p>
+            <p><input type="submit" value="解析"></p>
         </form>
     </body>
 </html>

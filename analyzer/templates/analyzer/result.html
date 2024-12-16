@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="ja">
-    <head>
+<head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>単語頻度解析アプリ</title>
-    </head>
-    <body>
+</head>
+<body>
         <header>
             <h1>単語頻度解析アプリ</h1>
         </header>
-        <form action = "#" method="post">
             <p>解析結果<br>
-            <input type="text" name="name"></p>
-            <p><input type="button" value="解析" id="button2"></p>
-        </form>
-    </body>
+            <p>{{ result }}</p> 
+            <a href="{% url 'upload' %}">戻る</a> <!--uploadという名前で指定されたURLに遷移-->
+</body>
 </html>
