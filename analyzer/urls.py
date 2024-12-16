@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
-from analyzer import views
+from . import views #views.pyから関数をインポート
 
 urlpatterns = [
-    path('',views.home, name="home"),
+    path('',views.upload, name="upload"), # ルートURLをviews.uploadに紐づける
 ]
