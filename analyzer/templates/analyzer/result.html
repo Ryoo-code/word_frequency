@@ -18,6 +18,8 @@
          <li>{{ word }}: {{ count }}</li>
         {% endfor %}
      </ul>
+    {% else %}
+     <p>単語の頻度データがありません。</p>
     {% endif %}
     <a href="{% url 'upload' %}">戻る</a> <!--uploadという名前で指定されたURLに遷移-->
 </body>
