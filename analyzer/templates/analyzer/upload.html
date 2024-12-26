@@ -1,19 +1,23 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ja">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>単語頻度解析アプリ</title>
-    </head>
-    <body>
-        <header>
-            <h1>単語頻度解析アプリ</h1>
-        </header>
-        <form action = "{% url 'result' %}" method="POST">
-            {% csrf_token %}
-            <p>英語の文章をここに入力してください<br>              
-                <input type="text" name="name"></p>
-            <p><input type="submit" value="解析"></p>
-        </form>
-    </body>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>単語頻度解析アプリ</title>
+    <link rel="stylesheet" href="{% static 'analyzer/css/style.css' %}">
+</head>
+<body class="upload-page">
+    <header>
+        <h1>単語頻度解析アプリ</h1>
+    </header>
+    <form action="{% url 'result' %}" method="POST">
+        {% csrf_token %}
+        <p>英語の文章をここに入力してください<br>
+        <p>{{ abc }}</p>
+            <textarea name="name"></textarea>
+        </p>
+        <p><input type="submit" value="解析"></p>
+    </form>
+</body>
 </html>

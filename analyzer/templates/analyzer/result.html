@@ -1,26 +1,44 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>単語頻度解析アプリ</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>単語頻度解析アプリ</title>
+    <link rel="stylesheet" href="{% static 'analyzer/css/style.css' %}">
 </head>
 <body>
     <header>
         <h1>単語頻度解析アプリ</h1>
+        <h2>解析結果</h2>
     </header>
     {% if word_count %}
-     <!-- 単語頻度を表示 -->
-     <h2>英単語の頻度</h2>
-     <!--ulはリスト全体を囲むタグで,liはそのリスト内の各項目を表す-->
-     <ul>
-        {% for word, count in word_count.items %}
-         <li>{{ word }}: {{ count }}</li>
-        {% endfor %}
-     </ul>
+    <!-- 単語頻度を表示 -->
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <th>Word</th>
+                    <th>Frequency</th>
+                    <th>EasySentence</th>
+                    <th>Translation</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for word_data in word_count %}
+                <tr>
+                    <td>{{ word_data.Word }}</td>
+                    <td>{{ word_data.Frequency }}</td>
+                    <td>{{ word_data.EasySentence }}</td>
+                    <td>{{ word_data.Translation }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
     {% else %}
-     <p>単語の頻度データがありません。</p>
+    <p>単語の頻度データがありません。</p>
     {% endif %}
-    <a href="{% url 'upload' %}">戻る</a> <!--uploadという名前で指定されたURLに遷移-->
+    <a href="{% url 'upload' %}">戻る</a>
 </body>
 </html>
