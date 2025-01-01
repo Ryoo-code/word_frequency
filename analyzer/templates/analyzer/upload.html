@@ -10,13 +10,25 @@
 <body class="upload-page">
     <header>
         <h1>単語頻度解析アプリ</h1>
+        <!-- ログイン状態の表示 -->
+        <nav>
+            {% if user.is_authenticated %}
+                <p>ようこそ {{ user.username }} さん</p>
+                <form id="logout-form" method="post" action="{% url 'logout' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" style="background: none; border: none; color: blue; text-decoration: underline; cursor: pointer;">
+                        ログアウト
+                    </button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">ログイン</a>
+            {% endif %}
+        </nav>
     </header>
     <form action="{% url 'result' %}" method="POST">
         {% csrf_token %}
-        <p>英語の文章をここに入力してください<br>
-        <p>{{ abc }}</p>
-            <textarea name="name"></textarea>
-        </p>
+        <p>英語の文章をここに入力してください</p>
+        <textarea name="name"></textarea>
         <p><input type="submit" value="解析"></p>
     </form>
 </body>

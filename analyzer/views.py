@@ -5,6 +5,8 @@ import spacy
 import os
 import pandas as pd
 import openai
+from django.contrib.auth.decorators import login_required  # 認証デコレーターをインポート
+from django.shortcuts import redirect
 
 #英語モデルをダウンロード
 nlp = spacy.load("en_core_web_sm")
@@ -21,7 +23,7 @@ def load_stopwords(file_path):
 custom_stopwords = load_stopwords(STOPWORDS_PATH)
 
 # OpenAI API キーの設定
-openai.api_key=""
+openai.api_key="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"
 
 def generate_sentence(word):
     """ChatGPT API を使用して簡単な英文と和訳を生成する関数"""
@@ -57,50 +59,47 @@ def generate_sentence(word):
      print(f"API Error: {str(e)}")
      return "Error generating sentence.", f"APIエラー: {str(e)}"
 
+@login_required  # ← 認証必須を追加
 def upload(request):
     # http://127.0.0.1:8000/ で表示されるページ
     return render(request, 'analyzer/upload.html')
 
+@login_required
 def result(request):
-    if request.method == 'POST':  # POSTリクエストの場合
-        input_text = request.POST.get('name', '').strip()  # フォームデータを取得、空白を除去     
-        # --- spacyを使ってストップワードを除外 ---
-        doc = nlp(input_text) #入力されたテキストをトークナイズして、基本形を取得したり、ストップワードの判断を行う
-        # 文字列を取得し、ストップワードとアルファベットのみで構成されてない単語を除去
+    if request.method == 'POST':
+        input_text = request.POST.get('name', '').strip()
+        request.session['input_text'] = input_text  # セッションにデータ保存
+        return redirect('result')
+
+    # GETリクエスト時はセッションデータを使う
+    input_text = request.session.get('input_text', '')
+    if input_text:
+        doc = nlp(input_text)
         filtered_words = [
-            token.lemma_ for token in doc  # token.text を token.lemma_ に変更(基本形の抽出の為)
+            token.lemma_ for token in doc
             if not token.is_stop and token.is_alpha and not token.is_punct
             and token.lemma_.lower() not in custom_stopwords
-            ]
-
+        ]
 
         word_count = dict(Counter(filtered_words))
-        word_count = {key: value for key, value in word_count.items() if key != "items"} #特定のキーを除く
-        # Pandas DataFrame に変換
+        word_count = {key: value for key, value in word_count.items() if key != "items"}
         df = pd.DataFrame(list(word_count.items()), columns=['Word', 'Frequency'])
         df = df.sort_values(by='Frequency', ascending=False)
 
-        # 上位 10 単語と頻度を抽出
         top_words = df.head(10)
-        # ChatGPT を使用して英文と和訳を生成
         results = []
         for index, row in top_words.iterrows():
             word = row['Word']
-            frequency = row['Frequency']  # 頻度情報を取得
+            frequency = row['Frequency']
             sentence, translation = generate_sentence(word)
             results.append({'Word': word, 'Frequency': frequency, 'EasySentence': sentence, 'Translation': translation})
-            # データフレームを作成
         result_df = pd.DataFrame(results)
 
-        # HTML に渡すためのデータを辞書形式に変換
         result_data = result_df.to_dict(orient='records')
 
         return render(request, 'analyzer/result.html', {
             'input_text': input_text,
-            'word_count': result_data  # データをリスト形式で渡す
+            'word_count': result_data
         })
     else:
-        return render(request, 'analyzer/result.html', {
-            'input_text': '',
-            'word_count': {}
-        })
+        return redirect('upload')  # セッションがなければuploadにリダイレクト

@@ -11,6 +11,15 @@
     <header>
         <h1>単語頻度解析アプリ</h1>
         <h2>解析結果</h2>
+        <!-- ログイン状態の表示 -->
+        <nav>
+            {% if user.is_authenticated %}
+                <p>ようこそ {{ user.username }} さん</p>
+                <a href="{% url 'logout' %}">ログアウト</a>
+            {% else %}
+                <a href="{% url 'login' %}">ログイン</a>
+            {% endif %}
+        </nav>
     </header>
     {% if word_count %}
     <!-- 単語頻度を表示 -->

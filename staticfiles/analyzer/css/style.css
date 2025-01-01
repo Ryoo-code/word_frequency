@@ -1,0 +1,114 @@
+/* 共通ヘッダーのスタイル */
+header {
+    text-align: center;
+    background-color: white; /* 背景色は白 */
+    padding: 0; /* 余白を減らす */
+    margin: 0; /* 不要な余白を完全に削除 */
+    box-shadow: none; /* ボックスシャドウを削除 */    
+}
+
+header h1 {
+    font-size: 2rem;
+    margin: 0;
+    color: black;
+}
+
+header h2 {
+    font-size: 1.5rem;
+    color: white;
+}
+
+/* ログインページ専用スタイル */
+body.login-page form input[type="text"],
+body.login-page form input[type="password"] {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+body.login-page form input[type="submit"] {
+    background-color: purple;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+body.login-page form input[type="submit"]:hover {
+    background-color: darkviolet;
+}
+
+/* uploadページ専用のスタイル */
+body.upload-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-color: white; /* 親要素の背景色も白に設定 */
+}
+
+body.upload-page form {
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 500px;
+}
+
+body.upload-page form textarea {
+    width: 90%;
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    height: 70px; /* 高さを直接指定 */
+    vertical-align: top; /* 上揃え設定 (inputには効かない) */
+    text-align: left; /* 左寄せにする場合 */
+}
+
+body.upload-page form input[type="submit"] {
+    background-color: purple;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+body.upload-page form input[type="submit"]:hover {
+    background-color: darkviolet;
+}
+
+/* 共通テーブルスタイル */
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+table th, table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+table th {
+    background-color: #f5f5f5;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
