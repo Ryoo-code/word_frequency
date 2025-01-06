@@ -23,7 +23,7 @@ def load_stopwords(file_path):
 custom_stopwords = load_stopwords(STOPWORDS_PATH)
 
 # OpenAI API キーの設定
-openai.api_key="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"
+openai.api_key=""
 
 def generate_sentence(word):
     """ChatGPT API を使用して簡単な英文と和訳を生成する関数"""
